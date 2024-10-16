@@ -47,7 +47,7 @@ services:
     restart: always
     build:
       context: .
-    command: "celery -A core worker -l info;"
+    command: "celery -A core worker -l info"
     volumes:
       - .:/code
       - static_volume:/code/staticfiles
