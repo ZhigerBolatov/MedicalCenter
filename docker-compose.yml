@@ -30,11 +30,12 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 8000:8000
     volumes:
       - .:/code
       - static_volume:/code/staticfiles
       - media_volume:/code/media
-      - front_volume:/code/front
+      - /code/front:/code/front
       - /etc/letsencrypt/live/happylifes.org/fullchain.pem:/etc/letsencrypt/live/happylifes.org/fullchain.pem
       - /etc/letsencrypt/live/happylifes.org/privkey.pem:/etc/letsencrypt/live/happylifes.org/privkey.pem
 #      - /etc/letsencrypt/live/dana-edu.kz-0001/chain.pem:/etc/letsencrypt/live/dana-edu.kz-0001/chain.pem
@@ -61,4 +62,3 @@ volumes:
   static_volume:
   media_volume:
   postgres_data:
-  front_volume:
