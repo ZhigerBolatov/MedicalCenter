@@ -35,7 +35,7 @@ services:
       - .:/code
       - static_volume:/code/staticfiles
       - media_volume:/code/media
-      - front_volume:/home/zhiger_ali/HappyLife/front/html/index.html
+      - front_volume:/code/front/html
       - /etc/letsencrypt/live/happylifes.org/fullchain.pem:/etc/letsencrypt/live/happylifes.org/fullchain.pem
       - /etc/letsencrypt/live/happylifes.org/privkey.pem:/etc/letsencrypt/live/happylifes.org/privkey.pem
 #      - /etc/letsencrypt/live/dana-edu.kz-0001/chain.pem:/etc/letsencrypt/live/dana-edu.kz-0001/chain.pem
