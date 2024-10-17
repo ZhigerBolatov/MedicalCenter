@@ -20,5 +20,6 @@ from happylife.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', AuthenticationAPIView.as_view())
+    path('login/', AuthenticationAPIView.as_view()),
+    path('user/', UserAPIView.as_view()),
 ]
