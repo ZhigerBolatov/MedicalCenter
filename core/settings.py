@@ -55,7 +55,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://happylifes.org/']
+CSRF_TRUSTED_ORIGINS = ['https://happylifes.org', 'https://happylifes.org:8000']
 
 ROOT_URLCONF = 'core.urls'
 
