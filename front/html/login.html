@@ -1,70 +1,274 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="ru"><head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <title>login</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="login.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 6.19.7, nicepage.com">
-    <meta name="referrer" content="origin">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    
-    
-    
-    <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": "",
-		"url": "/"
-}</script>
-    <meta name="theme-color" content="#3f96e8">
-    <meta property="og:title" content="login">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="/">
-  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-home-page="https://website6363400.nicepage.io/login.html?version=d5bf7631-4eed-12ee-8704-7053869921bc" data-home-page-title="login" data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="ru"><header class="u-clearfix u-header u-header" id="sec-e0e9"><div class="u-clearfix u-sheet u-sheet-1"></div></header>
-    <section class="u-clearfix u-gradient u-section-1" id="sec-3ff6">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-align-center u-form u-form-1">
-          <form action="https://forms.nicepagesrv.com/v2/form/process" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="email" name="form-1" style="padding: 10px;">
-            <div class="u-form-group u-form-name u-label-top">
-              <label for="name-bff5" class="u-custom-font u-font-georgia u-label u-text-palette-1-dark-2 u-label-1">Логин</label>
-              <input type="text" placeholder="Введите ваш логин" id="name-bff5" name="happylogin" class="u-input u-input-rectangle u-none u-radius u-input-1" required="">
-            </div>
-            <div class="u-form-email u-form-group u-label-top">
-              <label for="email-bff5" class="u-custom-font u-font-georgia u-label u-text-palette-1-dark-2 u-label-2">Пароль</label>
-              <input type="password" placeholder="Введите пароль" id="email-bff5" name="happypassword" class="u-input u-input-rectangle u-none u-radius u-input-2" required="">
-            </div>
-            <div class="u-align-center u-form-group u-form-submit u-label-top">
-              <input type="submit" value="submit" class="u-form-control-hidden">
-              <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-radius u-btn-1">Отправить</a>
-            </div>
-            <div class="u-form-send-message u-form-send-success"> Спасибо! Ваше сообщение отправлено. </div>
-            <div class="u-form-send-error u-form-send-message"> Отправка не удалась. Пожалуйста, исправьте ошибки и попробуйте еще раз. </div>
-            <input type="hidden" value="" name="recaptchaResponse">
-            <input type="hidden" name="formServices" value="58343a65-9b59-5a69-af37-d477f8a22611">
-          </form>
+    <title>LogIn - Happy Patient</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #e6f2ff;
+        }
+         #container {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 800px;
+            height: 400px;
+        }
+
+        #form-container {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+        }
+
+        #form-container h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header {
+            background-color: #e0e0e0;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #5b73d5;
+            margin: 0;
+            font-size: 24px;
+        }
+        .login-container {
+            display: flex;
+            flex: 1;
+            align-items: stretch;
+            justify-content: space-between;
+        }
+        .form-section {
+            width: 50%;
+            max-width: 400px;
+            margin: auto;
+            padding: 40px;
+            background-color: #f5faff;
+            border-radius: 10px;
+        }
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .form-section input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        .form-section button {
+            width: 100%;
+            padding: 15px;
+            background-color: #f5f5f5; /* Initial background color */
+            border: none;
+            border-radius: 30px;
+            cursor: not-allowed; /* Change cursor when disabled */
+            color: #a0a0a0; /* Initial text color */
+            margin-top: 10px;
+            transition: background-color 0.3s, color 0.3s; /* Transition for smooth change */
+        }
+        .form-section button.active {
+            background-color: #b3cde0; /* Active background color */
+            color: black; /* Active text color */
+            cursor: pointer; /* Change cursor when enabled */
+        }
+        .form-section a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #5b73d5;
+            text-decoration: none;
+        }
+        .form-section a:hover {
+            text-decoration: underline;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input.error {
+            border-color: red;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ccc;
+            color: white;
+            font-weight: bold;
+        }
+
+        button.active {
+            background-color: #00bfff;
+            color: black;
+        }
+
+        button.error {
+            background-color: red;
+        }
+
+        #image-container {
+            flex: 1;
+            background-image: url('your_image_url.png'); /* Замените на путь к вашей картинке */
+            background-size: cover;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+
+        /* Дополнительные стили для страницы восстановления пароля */
+        #password-reset-container {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #password-reset-container h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .image-section {
+            width: 50%;
+            height: 100vh;
+            background: url("doctors.jpeg") no-repeat center center;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Happy Patient</h1>
+    </header>
+
+    <div class="login-container">
+        <div class="form-section">
+            <h2>LogIn</h2>
+            <input type="email" id="email" placeholder="email" name="happylogin" required />
+            <input type="password" id="password" placeholder="Password" name="happypassword" required />
+            <button id="loginButton" disabled>Login</button>
+            <a href="#">Forget password?</a>
+            <a href="#">Don't have an account? Call us</a>
         </div>
-        <a href="password.html" class="u-active-none u-border-none u-border-palette-1-base u-btn u-button-style u-custom-font u-font-georgia u-hover-none u-none u-text-palette-1-dark-2 u-btn-2" target="_blank" title=" ">Забыли пароль? </a>
-      </div>
-    </section>
-    
-    
-    
-    <footer class="u-align-center u-clearfix u-container-align-center u-footer u-footer" id="sec-3ee0"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-      </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <p class="u-text">
-        <span>This site was created with the </span>
-        <a class="u-link" href="https://nicepage.com/" target="_blank" rel="nofollow">
-          <span>Nicepage</span>
-        </a>
-      </p>
-    </section>
-  
-</body></html>
+        <div class="image-section"></div>
+    </div>
+
+
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.getElementById('loginButton');
+
+        function updateButtonState() {
+            if (emailInput.value && passwordInput.value) {
+                loginButton.classList.add('active');
+                loginButton.disabled = false;
+            } else {
+                loginButton.classList.remove('active');
+                loginButton.disabled = true;
+            }
+        }
+
+        emailInput.addEventListener('input', updateButtonState);
+        passwordInput.addEventListener('input', updateButtonState);
+
+    //     const validEmail = '41403@iitu.edu.kz'; // Замените на ваш корректный email
+    //     const validPassword = '123456'; // Замените на ваш корректный пароль
+
+    //     function login() {
+    //         const email = document.getElementById('email').value;
+    //         const password = document.getElementById('password').value;
+    //         const errorMessage = document.getElementById('error-message');
+    //         const button = document.getElementById('loginButton');
+
+    //         // Сброс ошибок
+    //         errorMessage.textContent = '';
+    //         resetFields();
+
+    //         // Проверка логина и пароля
+    //         if (email === validEmail && password === validPassword) {
+    //             // Переход на страницу личного аккаунта
+    //             window.location.href = 'user_account.html'; // Замените на ваш URL
+    //         } else {
+    //             // Если логин или пароль неверны
+    //             errorMessage.textContent = 'Incorrect password or email';
+    //             document.getElementById('email').classList.add('error');
+    //             document.getElementById('password').classList.add('error');
+    //             button.classList.add('error');
+    //         }
+    //     }
+
+    //     function resetFields() {
+    //         document.getElementById('email').classList.remove('error');
+    //         document.getElementById('password').classList.remove('error');
+    //         document.getElementById('loginButton').classList.remove('error');
+    //     }
+
+    //     function showPasswordReset() {
+    //         document.getElementById('container').style.display = 'none'; // Скрыть страницу логина
+    //         document.getElementById('password-reset-container').style.display = 'block'; // Показать страницу восстановления пароля
+    //     }
+
+    //     function showLogin() {
+    //         document.getElementById('password-reset-container').style.display = 'none'; // Скрыть страницу восстановления пароля
+    //         document.getElementById('container').style.display = 'flex'; // Показать страницу логина
+    //     }
+
+    //     function resetPassword() {
+    //         const resetEmail = document.getElementById('reset-email').value;
+    //         const resetSuccessMessage = document.getElementById('reset-success-message');
+    //         const resetErrorMessage = document.getElementById('reset-error-message');
+
+    //         // Сброс сообщений
+    //         resetSuccessMessage.textContent = '';
+    //         resetErrorMessage.textContent = '';
+
+    //         // Проверка на существование email
+    //         if (resetEmail === validEmail) {
+    //             resetSuccessMessage.textContent = 'We send to your email a link to reset a password. Please, check.';
+    //         } else {
+    //             resetErrorMessage.textContent = "E-mail doesn't found.";
+    //         }
+    //     }
+    // </script>
+</body>
+</html>
