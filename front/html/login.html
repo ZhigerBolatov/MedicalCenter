@@ -216,7 +216,7 @@
             let email = document.getElementById('email');
             let password = document.getElementById('password');
             let credentials = {happylogin:email.value, happypassword:password.value}
-            let response = await fetch('http://happylifes.org:8000/login/', {
+            let response = await fetch('https://happylifes.org:8000/login/', {
                 method:'POST',
                 headers: {'Content-Type': 'application/json',},
                 body:JSON.stringify(credentials)
