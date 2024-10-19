@@ -140,9 +140,10 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 AUTH_USER_MODEL = 'happylife.HappyLifeUsers'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASS': [
-#         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.BasicAuthentication'
-#     ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASS': [
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+    ]
+}
