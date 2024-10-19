@@ -215,7 +215,12 @@
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
             let credentials = {happylogin:email, happypassword:password}
-            let response = await fetch('http://happylifes.org:8000/login/', {method:'POST', mode:'no-cors', body:JSON.stringify(credentials) });
+            let response = await fetch('http://happylifes.org:8000/login/', {
+                method:'POST',
+                headers: {'Content-Type': 'application/json',},
+                body:JSON.stringify(credentials)
+                //mode:'no-cors'
+            });
             let data = await response.text();
             alert(response.headers.get('Content-Type'));
         }
