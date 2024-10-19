@@ -200,6 +200,9 @@
         const loginButton = document.getElementById('loginButton');
 
         function updateButtonState() {
+            emailInput.style.backgroundColor = '';
+            passwordInput.style.backgroundColor = '';
+            document.getElementById('incorrect_text').innerHTML = '';
             if (emailInput.value && passwordInput.value) {
                 loginButton.classList.add('active');
                 loginButton.disabled = false;
