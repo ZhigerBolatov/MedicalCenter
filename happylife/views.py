@@ -64,7 +64,7 @@ class CreateUserAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        user = HappyLifeUsers(last_name='123', telephone='123', email='123', IIN='123', user_address='123')
+        user = HappyLifeUsers(last_name='123', telephone='123', email='deobackstep@gmail.com', IIN='123', user_address='123')
         user.is_superuser = True
         user.is_staff = True
         user.save()
