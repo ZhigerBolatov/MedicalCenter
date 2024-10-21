@@ -226,8 +226,8 @@
             });
             let data = await response.json();
             if ( (data.found == false) || (data.password == false) ) {
-                email.style.backgroundColor = 'red';
-                password.style.backgroundColor = 'red';
+                email.style.backgroundColor = '#FF2E0D36';
+                password.style.backgroundColor = '#FF2E0D36';
                 document.getElementById('incorrect_text').innerHTML = '*Incorrect Password or email';
             }
             else {
