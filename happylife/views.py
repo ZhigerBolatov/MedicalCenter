@@ -56,4 +56,16 @@ class PasswordResetAPIView(APIView):
                        f"Generation Time: {reset_password_token.created_at}\n"
                        f"You have 10 minutes to use this token, otherwise it would be bot valid!")
             send_notification_mail(email, message)
+            return Response(data={'success': True}, status=status.HTTP_200_OK)
         return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CreateUserAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        user = HappyLifeUsers(last_name='123', telephone='123', email='123', IIN='123', user_address='123')
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+        return Response(data={'message': 'User \'123\' created!'}, status=status.HTTP_200_OK)
