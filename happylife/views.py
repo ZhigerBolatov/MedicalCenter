@@ -11,6 +11,8 @@ from .models import *
 from .tasks import *
 
 import os
+from datetime import timedelta
+from django.utils import timezone
 
 
 class AuthenticationAPIView(APIView):
@@ -45,7 +47,7 @@ class PasswordResetAPIView(APIView):
 
     def post(self, request):
         email = request.data.get('email')
-        user = HappyLifeUsers.object.filter(email__iexact=email).first()
+        user = HappyLifeUsers.object.filter(email=email).first()
         if user:
             random_token = os.urandom(32).hex()
             reset_password_token = ResetPasswordToken(user=user, token=random_token)
@@ -60,14 +62,33 @@ class PasswordResetAPIView(APIView):
         return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CreateUserAPIView(APIView):
+class SetNewPasswordAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        user = HappyLifeUsers.object.get(IIN='123')
-        user.delete()
-        user = HappyLifeUsers(last_name='123', telephone='123', email='deobackstep@gmail.com', IIN='123', user_address='123')
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-        return Response(data={'message': 'User \'123\' created!'}, status=status.HTTP_200_OK)
+        email = request.data.get('email')
+        user = HappyLifeUsers.object.filter(email=email).first()
+        if user:
+            token = request.data.get('token')
+            reset_password_token = ResetPasswordToken.objects.filter(Q(user=user) & Q(token=token)).first()
+            if not reset_password_token:
+                return Response(data={'success': False,
+                                      'message': 'Email and/or Token is not valid!'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            if timezone.now() - reset_password_token.created_at < timedelta(minutes=10):
+                return Response(data={'success': False,
+                                      'message': 'Token was expired!'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            new_password = request.data.get('new_password')
+            user.set_password(new_password)
+            user.save()
+            reset_password_token.delete()
+            return Response(data={'success': True,
+                                  'message': 'Password successfully updated!'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data={'success': False,
+                              'message': 'Email and/or Token is not valid!'},
+                        status=status.HTTP_400_BAD_REQUEST)
