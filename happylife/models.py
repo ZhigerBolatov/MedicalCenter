@@ -3,13 +3,19 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import HappyLifeUserManager
 
 
-# Create your models here.
-
 class Role(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 
 class HappyLifeUsers(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
@@ -30,10 +36,15 @@ class HappyLifeUsers(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     object = HappyLifeUserManager()
 
+    def __str__(self):
+        return self.IIN
+
+
 class Schedule(models.Model):
     day = models.ForeignKey('Days', blank=True, null=True, on_delete=models.SET_NULL)
     time_start = models.DateTimeField()
     time_end = models.DateTimeField()
+
 
 class Parking(models.Model):
     user_id = models.ForeignKey('HappyLifeUsers', blank=True, null=True, on_delete=models.SET_NULL)
@@ -42,11 +53,20 @@ class Parking(models.Model):
     total = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
 
+
 class Days(models.Model):
     day = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return self.day
+
+
 class Status(models.Model):
     status = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.status
+
 
 class Booking(models.Model):
     time_start = models.DateTimeField()
@@ -59,3 +79,9 @@ class Booking(models.Model):
                                   related_name='booking_doctor')
     description = models.TextField()
     price = models.PositiveIntegerField()
+
+
+class ResetPasswordToken(models.Model):
+    user = models.ForeignKey('HappyLifeUsers', on_delete=models.SET_NULL)
+    token = models.CharField(max_length=64)
+    created_at = models.DateTimeField(auto_now=True)

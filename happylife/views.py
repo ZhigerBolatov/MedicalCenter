@@ -1,14 +1,17 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate
-from .models import *
 from django.db.models import Q
+
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from .serializers import *
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
-# Create your views here.
+from .serializers import *
+from .models import *
+from .tasks import *
+
+import os
+
 
 class AuthenticationAPIView(APIView):
     permission_classes = []
@@ -28,9 +31,29 @@ class AuthenticationAPIView(APIView):
         login(request, user)
         return Response(data={'found': True, 'password': True}, status=status.HTTP_200_OK)
 
+
 class UserAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         data = UserSerializer(request.user, many=False).data
         return Response(data=data, status=status.HTTP_200_OK)
+
+
+class PasswordResetAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        user = HappyLifeUsers.objects.filter(email__iexact=email).first()
+        if user:
+            random_token = os.urandom(32).hex()
+            reset_password_token = ResetPasswordToken(user=user, token=random_token)
+            reset_password_token.save()
+            message = (f"User on happylifes.org requested a reset password. "
+                       f"If it was not you, please ignore this mail\n\n"
+                       f"Your reset token: {random_token}\n\n"
+                       f"Generation Time: {reset_password_token.created_at}\n"
+                       f"You have 10 minutes to use this token, otherwise it would be bot valid!")
+            send_notification_mail(email, message)
+        return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
