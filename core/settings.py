@@ -59,12 +59,13 @@ CSRF_TRUSTED_ORIGINS = ['https://happylifes.org', 'https://happylifes.org:8000']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Replace with your preferred backend
 
-EMAIL_PORT = 587  # Replace with your email port
-EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
-EMAIL_USE_SSL = False
+EMAIL_PORT = 465  # Replace with your email port
+EMAIL_USE_TLS = False  # Set to False if your email server doesn't use TLS
+EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host for gmail -> 'smtp.gmail.com'
-EMAIL_HOST_USER = 'deobackstep@gmail.com'  # Replace with your email username
-EMAIL_HOST_PASSWORD = 'gmixtape1?!'  # Replace with your email password
+EMAIL_HOST_USER = 'utcoin.service.code@gmail.com'
+EMAIL_HOST_PASSWORD = 'btutskyjitdcuvno'
+EMAIL_ADMIN_USER = 'deobackstep@gmail.com'
 
 ROOT_URLCONF = 'core.urls'
 
