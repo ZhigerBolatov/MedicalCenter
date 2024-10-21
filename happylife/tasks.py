@@ -4,7 +4,7 @@ from core import settings
 
 
 @shared_task(bind=True)
-def send_notification_mail(target_mail, message):
+def send_notification_mail(self, target_mail, message):
     mail_subject = "Reset Password on HappyLifes"
     send_mail(
         subject=mail_subject,
