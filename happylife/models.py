@@ -82,6 +82,6 @@ class Booking(models.Model):
 
 
 class ResetPasswordToken(models.Model):
-    user = models.ForeignKey('HappyLifeUsers', on_delete=models.SET_NULL)
+    user = models.ForeignKey('HappyLifeUsers', on_delete=models.SET_NULL, null=True)
     token = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now=True)
