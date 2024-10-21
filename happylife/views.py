@@ -76,9 +76,7 @@ class SetNewPasswordAPIView(APIView):
                                       'message': 'Email and/or Token is not valid!'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            print(timezone.now())
-            print(reset_password_token.created_at)
-            if timezone.now() - reset_password_token.created_at < timedelta(minutes=10):
+            if timezone.now() - reset_password_token.created_at > timedelta(minutes=10):
                 return Response(data={'success': False,
                                       'message': 'Token was expired!'},
                                 status=status.HTTP_400_BAD_REQUEST)
