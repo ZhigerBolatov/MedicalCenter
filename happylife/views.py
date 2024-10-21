@@ -45,7 +45,7 @@ class PasswordResetAPIView(APIView):
 
     def post(self, request):
         email = request.data.get('email')
-        user = HappyLifeUsers.objects.filter(email__iexact=email).first()
+        user = HappyLifeUsers.object.filter(email__iexact=email).first()
         if user:
             random_token = os.urandom(32).hex()
             reset_password_token = ResetPasswordToken(user=user, token=random_token)
