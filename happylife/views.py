@@ -49,7 +49,7 @@ class PasswordResetAPIView(APIView):
         email = request.data.get('email')
         user = HappyLifeUsers.object.filter(email=email).first()
         if user:
-            random_token = os.urandom(32).hex()
+            random_token = os.urandom(3).hex()
             reset_password_token = ResetPasswordToken(user=user, token=random_token)
             reset_password_token.save()
             message = (f"User on happylifes.org requested a reset password. "
