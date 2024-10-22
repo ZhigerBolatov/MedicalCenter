@@ -50,6 +50,19 @@
             margin: 0;
             font-size: 24px;
         }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        nav a:last-child {
+            background-color: #b3d9ff;
+            padding: 5px 15px;
+            border-radius: 15px;
+        }
+        
         .login-container {
             display: flex;
             flex: 1;
@@ -176,7 +189,14 @@
 </head>
 <body>
     <header>
-        <h1>Happy Patient</h1>
+        <a href="index.html"><h1>Happy Patient</h1></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Log In</a>
+            <a href="SignIn.html">Sign In</a>
+            <a href="about_us.html">About Us</a>
+            <a href="contacts.html">Contacts</a>
+        </nav>
     </header>
 
     <div class="login-container">
@@ -187,7 +207,7 @@
             <p id="incorrect_text" style="color:red; font-size:12px"></p>
             <button id="loginButton" disabled onclick="sent_credential()">Login</button>
             <a href="/forgot_password.html">Forget password?</a>
-            <a href="#">Don't have an account? Call us</a>
+            <a href="SignIn.html">Don't have an account? Call us</a>
         </div>
         <div class="image-section"></div>
     </div>
