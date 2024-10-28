@@ -92,3 +92,50 @@ class SetNewPasswordAPIView(APIView):
         return Response(data={'success': False,
                               'message': 'Email and/or Token is not valid!'},
                         status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegistrationAPIView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        iin = request.data.get('iin')
+        user_check = HappyLifeUsers.object.filter(IIN=iin)
+        if user_check:
+            return Response(data={'success': False,
+                                  'message': 'User with this IIN already exists!'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        email = request.data.get('email')
+        user_check = HappyLifeUsers.object.filter(email=email)
+        if user_check:
+            return Response(data={'success': False,
+                                  'message': 'User with this email already exists!'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        telephone = request.data.get('telephone')
+        user_check = HappyLifeUsers.object.filter(telephone=telephone)
+        if user_check:
+            return Response(data={'success': False,
+                                  'message': 'User with this telephone already exists!'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            role = Role.objects.get(name='Patients')
+        except Role.DoesNotExist:
+            return Response(data={'success': False,
+                                  'message': 'Role \'Patients\' does not exist! You have to create it!'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        password = request.data.get('password')
+        extra_fields = {
+            'last_name': request.data.get('last_name'),
+            'first_name': request.data.get('first_name'),
+            'telephone': telephone,
+            'user_address': request.data.get('user_address'),
+            'email': email,
+            'role_id': role
+        }
+        user = HappyLifeUsers.object.create_user(IIN=iin, password=password, **extra_fields)
+        return Response(data={'success': True,
+                              'message': 'User successfully created!'},
+                        status=status.HTTP_201_CREATED)

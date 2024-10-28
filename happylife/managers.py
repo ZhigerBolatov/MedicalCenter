@@ -7,7 +7,7 @@ class HappyLifeUserManager(BaseUserManager):
             raise ValueError('IIN is Required')
         if password is None:
             raise ValueError('Password is Required')
-        user = self.model(IIN = IIN, **extra_fields)
+        user = self.model(IIN=IIN, **extra_fields)
         user.set_password(password)  # Set password with hash SHA256
         user.save()
         return user
