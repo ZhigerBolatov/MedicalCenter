@@ -16,7 +16,7 @@ from django.utils import timezone
 
 
 class AuthenticationAPIView(APIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request):
         happylogin = request.data.get('happylogin')
@@ -31,6 +31,8 @@ class AuthenticationAPIView(APIView):
             return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
         login(request, user)
+        request.session['username'] = happylogin
+        request.session.save()
         try:
             role = user.role_id.name
         except AttributeError:

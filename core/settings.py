@@ -169,3 +169,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
