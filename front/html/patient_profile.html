@@ -175,6 +175,7 @@
             async function logOut() {
                 let response = await fetch(backEndUrl + 'logout/', {
                     method:'POST',
+                    credentials: 'include',
                     headers: {'Content-Type': 'application/json',},
                 });
                 if (response.status == 200) {
