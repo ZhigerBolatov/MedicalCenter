@@ -1,1 +1,74 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">	<link rel="stylesheet" href="styles.css">    <title>Happy Patient</title></head><body onload="check_auth()">    <div class="container">        <header>            <h1>Happy Patient Medical Center</h1>            <nav>                <a href="index.html">Home</a>                <a href="" id="log_in_button"></a>				<a href="regis.html">Registration</a>            </nav>        </header>        <section class="hero">            <div class="hero-text">                <h2>Welcome to</h2>				<h2>Happy Patient Medical Center</h2>                <p>where your health and well-being are our top priorities.</p>				            </div>            <div>                <img src="doctors1.png" alt="Doctors" />            </div>        </section>        <footer class="footer">            <div>                <h3>Contacts</h3>                <p>+7 (727) 222 11 11</p>                <p>+7 (777) 222 55 33</p>            </div>            <div>                <h3>Opening Hours</h3>                <p>weekdays: from 8:00 am to 6:00 pm</p>                <p>weekends: from 9:00 am to 3:00 pm</p>            </div>            <div>                <h3>Location</h3>                <p>Almaty, Kazakhstan</p>                <p>Manassa 34/1</p>            </div>        </footer>    </div>    <script>        const backEndUrl = 'https://happylifes.org:8000/';        async function check_auth() {            let response = await fetch(backEndUrl + 'user/', {                method:'GET',                credentials: "include"            });            let data = await response.json();            if (response.status == 200) {                redirects = {                    Patients: 'patient_profile.html',                    Doctors: 'doctor_profile.html',                    Admin: 'admin_profile.html'                };                document.getElementById('log_in_button').href = redirects[data.role];                document.getElementById('log_in_button').innerHTML = 'Profile';            } else {                document.getElementById('log_in_button').href = 'login.html';                document.getElementById('log_in_button').innerHTML = 'Log In';            }        };    </script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+    <title>Happy Patient</title>
+</head>
+<body onload="check_auth()">
+    <div class="container">
+        <header>
+            <h1>Happy Patient Medical Center</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="" id="log_in_button">Log In</a>
+				<a href="regis.html">Registration</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-text">
+                <h2>Welcome to</h2>
+				<h2>Happy Patient Medical Center</h2>
+                <p>where your health and well-being are our top priorities.</p>
+				
+            </div>
+            <div>
+                <img src="doctors1.png" alt="Doctors" />
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div>
+                <h3>Contacts</h3>
+                <p>+7 (727) 222 11 11</p>
+                <p>+7 (777) 222 55 33</p>
+            </div>
+            <div>
+                <h3>Opening Hours</h3>
+                <p>weekdays: from 8:00 am to 6:00 pm</p>
+                <p>weekends: from 9:00 am to 3:00 pm</p>
+            </div>
+            <div>
+                <h3>Location</h3>
+                <p>Almaty, Kazakhstan</p>
+                <p>Manassa 34/1</p>
+            </div>
+        </footer>
+    </div>
+    <script>
+        const backEndUrl = 'https://happylifes.org:8000/';
+
+        async function check_auth() {
+            let response = await fetch(backEndUrl + 'user/', {
+                method:'GET',
+                credentials: "include"
+            });
+            let data = await response.json();
+            if (response.status == 200) {
+                redirects = {
+                    Patients: 'patient_profile.html',
+                    Doctors: 'doctor_profile.html',
+                    Admin: 'admin_profile.html'
+                };
+                document.getElementById('log_in_button').href = redirects[data.role];
+                document.getElementById('log_in_button').innerHTML = 'Profile';
+            } else {
+                document.getElementById('log_in_button').href = 'login.html';
+                document.getElementById('log_in_button').innerHTML = 'Log In';
+            }
+        };
+    </script>
+</body>
+</html>
