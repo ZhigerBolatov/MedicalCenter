@@ -176,7 +176,10 @@
                 let response = await fetch(backEndUrl + 'logout/', {
                     method:'POST',
                     credentials: 'include',
-                    headers: {'Content-Type': 'application/json',},
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
                 });
                 if (response.status == 200) {
                     // window.location.href = "login.html";
