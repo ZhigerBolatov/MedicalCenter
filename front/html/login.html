@@ -187,7 +187,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="check_auth()">
     <header>
         <a href="index.html"><h1>Happy Patient</h1></a>
         <nav>
@@ -215,6 +215,7 @@
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginButton = document.getElementById('loginButton');
+        const backEndUrl = 'https://happylifes.org/';
 
         function updateButtonState() {
             emailInput.style.backgroundColor = '';
@@ -236,82 +237,38 @@
             let email = document.getElementById('email');
             let password = document.getElementById('password');
             let credentials = {happylogin:email.value, happypassword:password.value}
-            let response = await fetch('https://happylifes.org:8000/login/', {
+            let response = await fetch(backEndUrl + 'login/', {
                 method:'POST',
                 headers: {'Content-Type': 'application/json',},
                 body:JSON.stringify(credentials)
             });
             let data = await response.json();
-            if ( (data.found == false) || (data.password == false) ) {
+            if (!data.success) {
                 email.style.backgroundColor = '#FF2E0D36';
                 password.style.backgroundColor = '#FF2E0D36';
                 document.getElementById('incorrect_text').innerHTML = '*Incorrect Password or email';
             }
-            else {
-                window.location.href = '/profile.html'
-            }
-            //alert();
+            redirects = {
+                Patients: 'patient_profile.html',
+                Doctors: 'doctor_profile.html',
+                Admin: 'admin_profile.html'
+            };
+            window.location.href = redirects[data.role];
         }
 
-    //     const validEmail = '41403@iitu.edu.kz'; // Замените на ваш корректный email
-    //     const validPassword = '123456'; // Замените на ваш корректный пароль
-
-    //     function login() {
-    //         const email = document.getElementById('email').value;
-    //         const password = document.getElementById('password').value;
-    //         const errorMessage = document.getElementById('error-message');
-    //         const button = document.getElementById('loginButton');
-
-    //         // Сброс ошибок
-    //         errorMessage.textContent = '';
-    //         resetFields();
-
-    //         // Проверка логина и пароля
-    //         if (email === validEmail && password === validPassword) {
-    //             // Переход на страницу личного аккаунта
-    //             window.location.href = 'user_account.html'; // Замените на ваш URL
-    //         } else {
-    //             // Если логин или пароль неверны
-    //             errorMessage.textContent = 'Incorrect password or email';
-    //             document.getElementById('email').classList.add('error');
-    //             document.getElementById('password').classList.add('error');
-    //             button.classList.add('error');
-    //         }
-    //     }
-
-    //     function resetFields() {
-    //         document.getElementById('email').classList.remove('error');
-    //         document.getElementById('password').classList.remove('error');
-    //         document.getElementById('loginButton').classList.remove('error');
-    //     }
-
-    //     function showPasswordReset() {
-    //         document.getElementById('container').style.display = 'none'; // Скрыть страницу логина
-    //         document.getElementById('password-reset-container').style.display = 'block'; // Показать страницу восстановления пароля
-    //     }
-
-    //     function showLogin() {
-    //         document.getElementById('password-reset-container').style.display = 'none'; // Скрыть страницу восстановления пароля
-    //         document.getElementById('container').style.display = 'flex'; // Показать страницу логина
-    //     }
-
-    //     function resetPassword() {
-    //         const resetEmail = document.getElementById('reset-email').value;
-    //         const resetSuccessMessage = document.getElementById('reset-success-message');
-    //         const resetErrorMessage = document.getElementById('reset-error-message');
-
-    //         // Сброс сообщений
-    //         resetSuccessMessage.textContent = '';
-    //         resetErrorMessage.textContent = '';
-
-    //         // Проверка на существование email
-    //         if (resetEmail === validEmail) {
-    //             resetSuccessMessage.textContent = 'We send to your email a link to reset a password. Please, check.';
-    //         } else {
-    //             resetErrorMessage.textContent = "E-mail doesn't found.";
-    //         }
-    //     }
-    // </script>
+        async function check_auth() {
+            let response = await fetch(backEndUrl + 'user/', {method:'GET'});
+            let data = await response.json();
+            if (response.status == 200) {
+                redirects = {
+                    Patients: 'patient_profile.html',
+                    Doctors: 'doctor_profile.html',
+                    Admin: 'admin_profile.html'
+                };
+                window.location.href = redirects[data.role];
+            }
+        };
+    </script>
 
 
 </body>

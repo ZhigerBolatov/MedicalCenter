@@ -97,28 +97,42 @@
         .footer p {
             margin: 5px 0;
         }
+
+        #user_data td {
+            padding-right: 20px;
+        }
     </style>
 </head>
-<body>
+<body onload="check_auth()">
     <div class="container">
         <header>
             <h1>
             <a href="#">Happy Patient</a>
         </h1>
             <nav>
-                <a href="#">Home</a>
-                <a href="index.html">LogOut</a>
+                <a href="index.html">Home</a>
+                <a href="" onclick="logOut()">LogOut</a>
             </nav>
         </header>
 
         <section class="hero">
-            <div class="hero-text">
-				<h2>Welcome</h2>
-                <h2>Medical center website</h2>
-                <p>We help you</p>
-            </div>
-            <div>
-                <img src="doctors1.png" alt="Doctors" />
+            <div style="margin-left: auto; margin-right: auto;">
+                <table id="user_data">
+                    <tbody>
+                        <tr>
+                            <td>IIN:</td>
+                            <td id="iin"></td>
+                        </tr>
+                        <tr>
+                            <td>Name:</td>
+                            <td id="first_name"></td>
+                        </tr>
+                        <tr>
+                            <td>Surname:</td>
+                            <td id="last_name"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -141,6 +155,30 @@
                 <p>dv</p>
             </div>
         </footer>
+        <script>
+            const backEndUrl = 'https://happylifes.org/';
+
+            async function check_auth() {
+                let response = await fetch(backEndUrl + 'user/', {method:'GET'});
+                if (response.status == 403) {
+                    window.location.href = "login.html";
+                }
+                let data = await response.json();
+                document.getElementById('iin').innerHTML = data.IIN;
+                document.getElementById('first_name').innerHTML = data.first_name;
+                document.getElementById('last_name').innerHTML = data.last_name;
+            };
+
+            async function logOut() {
+                let response = await fetch(backEndUrl + 'logout/', {
+                    method:'POST',
+                    headers: {'Content-Type': 'application/json',},
+                });
+                if (response.status == 200) {
+                    window.location.href = "login.html";
+                }
+            }
+        </script>
     </div>
 </body>
 </html>

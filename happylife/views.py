@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q
 
 from rest_framework.views import APIView
@@ -24,21 +24,34 @@ class AuthenticationAPIView(APIView):
         user = HappyLifeUsers.object.filter(Q(IIN=happylogin) | Q(email=happylogin) | Q(telephone=happylogin))
 
         if not user:
-            return Response(data={'found': False, 'password': False}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
         user = authenticate(IIN=user[0].IIN, password=happypassword)
 
         if user is None:
-            return Response(data={'found': True, 'password': False}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
         login(request, user)
-        return Response(data={'found': True, 'password': True}, status=status.HTTP_200_OK)
+        try:
+            role = user.role_id.name
+        except AttributeError:
+            role = None
+        return Response(data={'success': True, 'role': role}, status=status.HTTP_200_OK)
+
+
+class LogOutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        logout(request)
+        return Response(data={'success': True}, status=status.HTTP_200_OK)
 
 
 class UserAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
-        data = UserSerializer(request.user, many=False).data
+        user = HappyLifeUsers.object.get(email='123@gmail.com')
+        data = UserSerializer(user, many=False).data
         return Response(data=data, status=status.HTTP_200_OK)
 
 
@@ -95,7 +108,7 @@ class SetNewPasswordAPIView(APIView):
 
 
 class RegistrationAPIView(APIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request):
         iin = request.data.get('iin')
@@ -139,3 +152,16 @@ class RegistrationAPIView(APIView):
         return Response(data={'success': True,
                               'message': 'User successfully created!'},
                         status=status.HTTP_201_CREATED)
+
+
+class AuthInfoAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            role = request.user.role_id.name
+            return Response(data={'is_authenticated': True,
+                                  'role': role},
+                            status=status.HTTP_200_OK)
+        else:
+            return Response(data={'is_authenticated': False}, status=status.HTTP_200_OK)

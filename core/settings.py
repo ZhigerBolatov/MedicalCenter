@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-pfa32-2gcay1ax-s_=3#e78qule#hx3zhnbpp-@ig3#hc5o6g%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+LOCAL = False  # Switch databases. If True then use local sqlite3, else use postgres in Docker
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,23 +91,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'happylife_db',
-        'USER': 'postgres',
-        'PASSWORD': 'happy222',
-        'HOST': 'postgres',
-        'PORT': '5432',
+if not LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'happylife_db',
+            'USER': 'postgres',
+            'PASSWORD': 'happy222',
+            'HOST': 'postgres',
+            'PORT': '5432',
+        }
     }
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
