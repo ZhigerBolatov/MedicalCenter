@@ -50,8 +50,7 @@ class UserAPIView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        user = HappyLifeUsers.object.get(email='123@gmail.com')
-        data = UserSerializer(user, many=False).data
+        data = UserSerializer(request.user, many=False).data
         return Response(data=data, status=status.HTTP_200_OK)
 
 
