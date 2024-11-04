@@ -257,7 +257,10 @@
         }
 
         async function check_auth() {
-            let response = await fetch(backEndUrl + 'user/', {method:'GET'});
+            let response = await fetch(backEndUrl + 'user/', {
+                method:'GET',
+                credentials: "include"
+            });
             let data = await response.json();
             if (response.status == 200) {
                 redirects = {

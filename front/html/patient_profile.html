@@ -159,7 +159,10 @@
             const backEndUrl = 'https://happylifes.org:8000/';
 
             async function check_auth() {
-                let response = await fetch(backEndUrl + 'user/', {method:'GET'});
+                let response = await fetch(backEndUrl + 'user/', {
+                    method:'GET',
+                    credentials: "include"
+                });
                 if (response.status == 403) {
                     window.location.href = "login.html";
                 }
