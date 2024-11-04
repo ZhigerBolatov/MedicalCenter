@@ -55,6 +55,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_HEADERS = True
 
 CSRF_TRUSTED_ORIGINS = ['https://happylifes.org', 'https://happylifes.org:8000']
 
