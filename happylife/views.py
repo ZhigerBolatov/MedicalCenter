@@ -25,14 +25,12 @@ class AuthenticationAPIView(APIView):
 
         if not user:
             return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
-        user = authenticate(IIN=user[0].IIN, password=happypassword)
+        user = authenticate(request, IIN=user[0].IIN, password=happypassword)
 
         if user is None:
             return Response(data={'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
         login(request, user)
-        request.session['username'] = happylogin
-        request.session.save()
         try:
             role = user.role_id.name
         except AttributeError:
