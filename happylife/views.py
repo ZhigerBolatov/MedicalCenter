@@ -13,6 +13,7 @@ from .tasks import *
 import os
 from datetime import timedelta
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 
 class AuthenticationAPIView(APIView):
@@ -41,6 +42,7 @@ class AuthenticationAPIView(APIView):
 class LogOutAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @csrf_exempt
     def post(self, request):
         logout(request)
         return Response(data={'success': True}, status=status.HTTP_200_OK)
