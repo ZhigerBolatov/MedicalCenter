@@ -39,6 +39,7 @@
         const emailError = document.getElementById('emailError');
         const phoneError = document.getElementById('phoneError');
         const errorMessage = document.getElementById('errorMessage');
+        let valid = true;
 
         async function sendForm() {
             errorMessage.innerHTML = '';
@@ -72,28 +73,28 @@
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
-        function validateForm() {
-            let valid = true;
-
+        function checkEmail() {
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-
-            // Validate email
-            if (!validateEmail(email)) {
+            if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
                 emailError.textContent = "Invalid email format";
                 valid = false;
             } else {
                 emailError.textContent = "";
             }
+        }
 
-            // Validate phone
+        function checkPhone() {
+            const phone = document.getElementById('phone').value;
             if (!validatePhone(phone)) {
                 phoneError.textContent = "Phone must contain only digits";
                 valid = false;
             } else {
                 phoneError.textContent = "";
             }
+        }
 
+        function validateForm() {
+            valid = true;
             // Check if all fields are filled
             fields.forEach(field => {
                 if (!field.value) valid = false;
@@ -104,6 +105,8 @@
         }
 
         fields.forEach(field => field.addEventListener('input', validateForm));
+        document.getElementById('email').addEventListener('input', checkEmail);
+        document.getElementById('phone').addEventListener('input', checkPhone);
     </script>
 
 </body>
